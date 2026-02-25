@@ -1,0 +1,119 @@
+# Netlify configuration for Mama Dyeing website
+[build]
+  # Build command
+  command = "npm run build"
+  # Directory to publish (contains the built static files)
+  publish = "dist"
+
+# Environment variables for production
+[build.environment]
+  NODE_VERSION = "18"
+
+# SPA redirect rules for client-side routing
+[[redirects]]
+  # Catch all routes and redirect to index.html for SPA routing
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  # Don't apply this rule to actual files (CSS, JS, images, etc.)
+  conditions = {Role = ["admin"], Country = ["US"]}
+
+# More specific redirect rules for better performance
+[[redirects]]
+  # Handle all page routes - redirect to index.html with 200 status
+  from = "/about"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/services"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/quote"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/terms-of-service"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/refund-policy"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/sitemap"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/color-chart"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/fabric-care-guide"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/quality-standards"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/faq"
+  to = "/index.html"
+  status = 200
+
+# Fallback rule for any other routes
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Development environment settings
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"
+
+# Local development context
+[context.dev]
+  command = "npm run dev"
+  port = 5173
